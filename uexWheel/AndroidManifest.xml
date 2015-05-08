@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+    <application>
+        <activity
+            android:name="org.zywx.wbpalmstar.plugin.uexwheel.SemicircleMenuActivity"
+            android:theme="@style/Transparent_uexWheel1" >
+        </activity>
+        <activity
+            android:name="org.zywx.wbpalmstar.plugin.uexwheel.SectorMenuActivity"
+            android:theme="@style/Transparent_uexWheel2" >
+        </activity>
+        <activity
+            android:name="org.zywx.wbpalmstar.plugin.uexwheel.PopButtonActivity">
+        </activity>
+        <activity
+            android:name="org.zywx.wbpalmstar.plugin.uexwheel.FirstActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="org.zywx.wbpalmstar.plugin.uexwheel.SecondActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="org.zywx.wbpalmstar.plugin.uexwheel.BackGroundActivity"
+            android:theme="@style/Transparent_uexWheel3" >
+        </activity>
+    </application>
+</manifest>

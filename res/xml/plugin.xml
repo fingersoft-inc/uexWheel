@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uexplugins>
+	<plugin
+        className="org.zywx.wbpalmstar.plugin.uexwheel.EUExWheel" uexName="uexWheel" >
+        <method name="openSemicircle" />
+        <method name="openCircle" />
+        <method name="openQuartercircle" />
+        <method name="closeSemicircle" />
+        <method name="closeCircle" />
+        <method name="closeQuartercircle" />
+    </plugin>
+</uexplugins>

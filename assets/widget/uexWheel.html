@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/project/new.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="tit">Wheel</div>
+        <div id="page_0" class="up ub ub-ver" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head head-p">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">uexWheel</h1>
+                <div class="nav-btn nav-bt" id="nav-right">
+                    <div class="fa fa-book ulev2"></div>
+                </div>
+            </div>
+            <!--header结束-->
+            <div class="conbor"  id="cont">
+                <div class="consj" id="topDiv">
+                    <div class="ulev2 uin9">
+                        轮盘菜单
+                    </div>
+                    <div class="umh1"></div>
+                    <div class="uin" id="height">
+                        <div class="ub btn bc-text-head bc-btn ub-ac ub-pc" id="btn1">
+                            打开全圆轮盘菜单-全圆
+                        </div>
+                    </div>
+                    <div class="umh1"></div>
+                    <div class="uin" id="height">
+                        <div class="ub btn bc-text-head bc-btn ub-ac ub-pc" id="btn2">
+                            打开全圆轮盘菜单-半圆
+                        </div>
+                    </div>
+                    <div class="umh1"></div>
+                    <div class="uin" id="height">
+                        <div class="ub btn bc-text-head bc-btn ub-ac ub-pc" id="btn3">
+                            打开半圆轮盘菜单
+                        </div>
+                    </div>
+                    <div class="umh1"></div>
+                    <div class="uin" id="height">
+                        <div class="ub btn bc-text-head bc-btn ub-ac ub-pc" id="btn4">
+                            打开四分之一圆轮盘菜单
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+
+            </div>
+            <!--content结束-->
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+    </body>
+    <script>
+        var titHeight = 0;
+        appcan.ready(function() {
+            titHeight = $('#header').offset().height;
+            uexWheel.cbSelect = function(index1, index2) {
+                alert(index1 + ", " + index2);
+            }
+            uexWheel.onClick = function(data) {
+                appcan.window.open('API', 'uexWheel.html', 10);
+            }
+            uexWidgetOne.cbError = function(opid, dataType, data) {
+                alert(data);
+            }
+            //uexWidget.startWidget("123456789", "2", "pluginCallback", "plugin 插件调用");
+        })
+        appcan.button(".nav-btn", "btn-act", function(a, b) {
+            var btn = $(a.currentTarget);
+            var btn_id = btn.attr('id');
+            if (btn_id == 'nav-left'){
+                appcan.window.close(-1);
+            } else {
+                appcan.setLocVal('title', 'uexWheel');
+                appcan.window.open('API', 'uexWheel.html', 10);
+            }
+        });
+         function openSemicircleMenu() {
+            var data = '{"data":[{"image": "res://semicircle/plugin_uexwheel1_1.png","title": "短信"},{"image": "res://semicircle/plugin_uexwheel1_2.png","title": "列表"},{"image": "res://semicircle/plugin_uexwheel1_3.png","title": "拍照"},{"image": "res://semicircle/plugin_uexwheel1_4.png","title": "相册"},{"image": "res://semicircle/plugin_uexwheel1_5.png","title": "视频"}],"background": "res://semicircle/plugin_uexwheel1_bg.png"}';
+            var divTop = $('#topDiv')[0].offsetTop + $('#topDiv')[0].offsetHeight + $('#height')[0].offsetHeight;
+            // var btheight = $('#height')[0].offsetHeight + $('#heights')[0].offsetHeight;
+            var s = window.getComputedStyle(document.body, null);
+            var w = parseInt(parseInt(s.width) - 20);
+            var h = parseInt(s.height);
+            uexWheel.openSemicircle("0", divTop, w, h - divTop, data);
+        }
+
+        function openCircleMenu(type) {
+            var data = '{"button":"res://circle/button.png","menuBg":"res://circle/icon_bg_normal.png","subMenuBg":"res://circle/iconbg.png","iconLeft":"res://circle/left.png","iconSelect":"res://circle/icon_bg_select.png","bgColor":"#00000000","menu":[{"img":"res://circle/tab1.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png"]},{"img":"res://circle/tab2.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png"]},{"img":"res://circle/tab3.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png","res://circle/icon15.png"]},{"img":"res://circle/tab4.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png","res://circle/icon15.png","res://circle/icon16.png"]},{"img":"res://circle/tab5.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png","res://circle/icon12.png","res://circle/icon16.png"]},{"img":"res://circle/tab3.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png","res://circle/icon15.png"]},{"img":"res://circle/tab3.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png","res://circle/icon15.png"]},{"img":"res://circle/tab3.png","subMenu":["res://circle/icon11.png","res://circle/icon12.png","res://circle/icon13.png","res://circle/icon14.png","res://circle/icon15.png"]}]}';
+            //var divTop = $('#height')[0].offsetHeight;
+            var divTop = $('#topDiv')[0].offsetTop + $('#topDiv')[0].offsetHeight + $('#height')[0].offsetHeight;
+            // var btheight = $('#height')[0].offsetHeight + $('#heights')[0].offsetHeight;
+            var s = window.getComputedStyle(document.body, null);
+            var w = parseInt(s.width);
+            var h = parseInt(s.height);
+            uexWheel.openCircle('0', divTop, w, h-divTop, data, type);
+        }      
+        
+        function openQuartercircleMenu(){
+            var data = '{"data":[{"image":"res://quartercircle/plugin_uexwheel2_1.png","title":"视频"},{"image":"res://quartercircle/plugin_uexwheel2_2.png","title":"图片"},{"image":"res://quartercircle/plugin_uexwheel2_3.png","title":"拍照"},{"image":"res://quartercircle/plugin_uexwheel2_4.png","title":"排序"},{"image":"res://quartercircle/plugin_uexwheel2_5.png","title":"信息"},{"image":"res://quartercircle/plugin_uexwheel2_3.png","title":"拍照"}],"openImg":"res://quartercircle/plugin_uexwheel2_bt_plus.png","openTitle":"open","closeImg":"res://quartercircle/plugin_uexwheel2_bt_close.png","closeTitle":"close","rootBg":"res://quartercircle/plugin_wheel2_bg.png","subBg":"res://quartercircle/plugin_uexwheel2_bt_bg.png","textColor":"#cccccc"}';
+            var divTop = $('#topDiv')[0].offsetTop + $('#topDiv')[0].offsetHeight + $('#height')[0].offsetHeight;
+            // var btheight = $('#height')[0].offsetHeight + $('#heights')[0].offsetHeight;
+            var s = window.getComputedStyle(document.body, null);
+            var w = parseInt(s.width);
+            var h = parseInt(s.height);
+            uexWheel.openQuartercircle('0', divTop, w, h - divTop, data);
+        }
+
+        appcan.button(".btn", "ani-act", function() {
+            uexWheel.closeCircle();
+            uexWheel.closeSemicircle();
+            uexWheel.closeQuartercircle();
+            switch(this.id) {
+            case "btn1":
+                openCircleMenu(0);
+                break;
+            case "btn2":
+                openCircleMenu(1);
+                break;
+            case "btn3":
+                openSemicircleMenu();
+                break;
+            case "btn4":
+                openQuartercircleMenu();
+                break;
+            }            
+        });
+ 
+            
+    </script>
+</html>

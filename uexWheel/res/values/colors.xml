@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!-- uexWheel plugin use -->
+    <color name="transparent_background_uexWheel">#50000000</color> 
+</resources>
