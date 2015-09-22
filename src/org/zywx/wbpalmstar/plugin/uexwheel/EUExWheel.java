@@ -46,7 +46,7 @@ public class EUExWheel extends EUExBase {
 	private static final String TAG_QUARTERCIRCLE_SECTOR = "EUExWheel_Quartercircle_sector";
 	private static final String TAG_CIRCLE_TAB = "EUExWheel_Circle_tab";
 	public static final String TAG_CIRCLE_CIRCLE = "EUExWheel_Circle_circle";
-	private int left = 0, top = 0, width = -1, height = -1, btnWidth = 0;
+	private static int left = 0, top = 0, width = -1, height = -1, btnWidth = 0;
 	private SemicircleMenuActivity mainContext;
 	private static boolean isQuartercircleOpen = false;// 菜单打开状态
 	private static boolean isCircleOpen = false;// 菜单打开状态
@@ -76,9 +76,9 @@ public class EUExWheel extends EUExBase {
     /**
      * 悬浮按钮点击回调
      */
-    public static OnPopClickListener onPopClickListener;
-    
-    private QuartercircleBean mQuartercircleBean;
+    public OnPopClickListener onPopClickListener;
+
+    private static QuartercircleBean mQuartercircleBean;
     private CircleBean mCircleBean;
     private SemicircleBean mSemicircleBean;
     public static LocalActivityManager mgr;
@@ -113,7 +113,7 @@ public class EUExWheel extends EUExBase {
             }
         };
 	}
-	
+
 	/**
      * 打开扇形菜单
      */
@@ -418,6 +418,7 @@ public class EUExWheel extends EUExBase {
 	        } catch (JSONException e) {
 	            e.printStackTrace();
 	        }
+            Log.i("djf", "getQuartercircleData->mQuartercircleBean = " + mQuartercircleBean);
 	}
 	    
 	private void getCircleBeanData(String jsonData){

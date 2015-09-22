@@ -68,12 +68,10 @@ public class PopButtonActivity extends Activity {
 				try {
 					if (!menuShowStatus) {
 						menuShowStatus = true;
-						EUExWheel.onPopClickListener
-								.onClickOpen(imagePlus, buttonText);
+                        listener.onClickOpen(imagePlus, buttonText);
 					} else {
 						menuShowStatus = false;
-						EUExWheel.onPopClickListener
-								.onClickClose(imagePlus, buttonText);
+                        listener.onClickClose(imagePlus, buttonText);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
