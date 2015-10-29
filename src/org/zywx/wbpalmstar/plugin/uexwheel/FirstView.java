@@ -9,27 +9,23 @@ import org.zywx.wbpalmstar.plugin.uexwheel.util.CircleAnimation;
 import org.zywx.wbpalmstar.plugin.uexwheel.util.ImageUtil;
 import org.zywx.wbpalmstar.plugin.uexwheel.util.SecondView.OnTurnplateListener;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 
-@SuppressLint("InlinedApi")
-public class FirstActivity extends Activity implements OnClickListener,
+public class FirstView extends RelativeLayout implements OnClickListener,
 		OnTurnplateListener {
 
     private LinearLayout rl_bg;
@@ -42,7 +38,7 @@ public class FirstActivity extends Activity implements OnClickListener,
 	private CircleAnimation mAnimation;
 	private View translucentView;
 	private LayoutParams mLp;
-	private static CircleBean bean;
+	private CircleBean bean;
 	private int mTabCount;
     private Bitmap[] mTabs;
     private int mIconW, mIconH;
@@ -55,12 +51,18 @@ public class FirstActivity extends Activity implements OnClickListener,
     private ImageView icon_left;
     private CircleParams params;
     private int mSecondViewW,mSecondViewH;
-    
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(EUExUtil.getResLayoutID("plugin_uexwheel3_main"));
+    private Context mContext;
+
+    public FirstView(Context context, CircleBean data) {
+        super(context);
+        this.mContext = context;
+        this.bean = data;
+        init();
+    }
+
+	private void init() {
+        LayoutInflater.from(mContext).inflate(EUExUtil.getResLayoutID("plugin_uexwheel3_main"),
+                this, true);
         mLp = EUExWheel.circleLp;
         mAnimation = new CircleAnimation();
         if(bean.getType() == 0){
@@ -71,24 +73,19 @@ public class FirstActivity extends Activity implements OnClickListener,
 		initView();
         params =  getCircleParams();
 		rl_bg.setVisibility(View.GONE);
-		Intent intent = new Intent(this, BackGroundActivity.class);
-		intent.putExtra(CircleBean.BGCOLOR_TAG, bean.getBgColor());
-		// 获取下一个activity的view
-		translucentView = EUExWheel.mgr.startActivity(
-				BackGroundActivity.TAG, intent).getDecorView();
-		RelativeLayout.LayoutParams lparm = getTranslucentViewlp();
+
+        translucentView = new BackGroundView(mContext, bean.getBgColor());
+		RelativeLayout.LayoutParams lParam = getTranslucentViewlp();
         EUExWheel.circleCallback.addView(translucentView,
-                lparm);
+                lParam);
 		translucentView.setVisibility(View.GONE);
         mAnimation.setLp(getAnimationlp());
         setViewDisplayOrHide(true);
 	}
 
-	@Override
-	protected void onDestroy() {
+	public void clean() {
 		flag = true;
 		secondview = null;
-		super.onDestroy();
 	}
 
 	private void initView() {
@@ -110,21 +107,21 @@ public class FirstActivity extends Activity implements OnClickListener,
         icon_left.getLayoutParams().width = mSize / 3;
         icon_left.getLayoutParams().height = mSize;
         icon_left.setScaleType(ScaleType.FIT_XY);
-        ImageUtil.setBackgroundBitmap(this, icon_left, bean.getIconLeft());
+        ImageUtil.setBackgroundBitmap(mContext, icon_left, bean.getIconLeft());
 	    linears = new ArrayList<LinearLayout>();
 		rl_bg1 = (LinearLayout) findViewById(EUExUtil.getResIdID("rl_bg1"));
 		rl_bg1.getLayoutParams().width = mSize;
 		rl_bg1.getLayoutParams().height = mSize;
-        ImageUtil.setBackgroundBitmap(this, rl_bg1, bean.getButton());
+        ImageUtil.setBackgroundBitmap(mContext, rl_bg1, bean.getButton());
 		rl_bg1.setOnClickListener(this);
 		rl_bg2 = (LinearLayout) findViewById(EUExUtil.getResIdID("rl_bg2"));
 		mSroll_bg = (HorizontalScrollView) findViewById(EUExUtil.getResIdID("scroll_bg"));
 		mSroll_bg.getLayoutParams().height = mSize;
 		rl_bg2.getLayoutParams().height = mSize;
-		ImageUtil.setBackgroundBitmap(this, mSroll_bg, bean.getMenuBg());
+		ImageUtil.setBackgroundBitmap(mContext, mSroll_bg, bean.getMenuBg());
 		for (int i = 0; i < mTabCount; i++) {
 		    final int index = i;
-            LinearLayout ll = new LinearLayout(getApplicationContext());
+            LinearLayout ll = new LinearLayout(mContext);
             ll.setGravity(Gravity.CENTER);
 //            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 //                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
@@ -132,7 +129,7 @@ public class FirstActivity extends Activity implements OnClickListener,
                     mTabWidth, mSize);
             ll.setLayoutParams(lp);
             rl_bg2.addView(ll);
-            ImageView iv = new ImageView(getApplicationContext());
+            ImageView iv = new ImageView(mContext);
             LinearLayout.LayoutParams ivlp = new LinearLayout.LayoutParams(mIconW, mIconH);
             iv.setLayoutParams(ivlp);
             iv.setImageBitmap(mTabs[i]);
@@ -156,18 +153,18 @@ public class FirstActivity extends Activity implements OnClickListener,
 	    mCurrentIndex = index;
 	    switch (index) {
             case 0:
-                ImageUtil.setBackgroundBitmap(this, linears.get(index), bean.getIconSelect());
+                ImageUtil.setBackgroundBitmap(mContext, linears.get(index), bean.getIconSelect());
                 for (int i = 1; i < mTabCount; i++) {
-                    ImageUtil.setBackgroundBitmap(this, linears.get(i), null);
+                    ImageUtil.setBackgroundBitmap(mContext, linears.get(i), null);
                 }
                 break;
     
             default:
                 for (int i = 0; i < mTabCount; i++) {
                     if(index == i){
-                        ImageUtil.setBackgroundBitmap(this, linears.get(i), bean.getIconSelect());
+                        ImageUtil.setBackgroundBitmap(mContext, linears.get(i), bean.getIconSelect());
                     }else{
-                        ImageUtil.setBackgroundBitmap(this, linears.get(i), null);
+                        ImageUtil.setBackgroundBitmap(mContext, linears.get(i), null);
                     }
                 }
                 break;
@@ -202,7 +199,7 @@ public class FirstActivity extends Activity implements OnClickListener,
         }else{
             mAnimation.startAnimationRemove((ViewGroup) secondview, 200, 0);
             mAnimation.startAnimationOUT(rl_bg, 500, 0);
-            EUExWheel.mgr.destroyActivity(EUExWheel.TAG_CIRCLE_CIRCLE, true);
+            //EUExWheel.mgr.destroyActivity(EUExWheel.TAG_CIRCLE_CIRCLE, true);
             EUExWheel.circleCallback.removeView(secondview);
             //EUExWheel.circleCallback.removeView(translucentView);
             if (translucentView.getVisibility() == View.VISIBLE) {
@@ -214,14 +211,9 @@ public class FirstActivity extends Activity implements OnClickListener,
     }
     
     private View getSecondView(int index){
-        Intent intent = new Intent(this, SecondActivity.class);
         // 获取下一个activity的view
-        SecondActivity.setBitmaps(bean.getMenuIcons(index));
-        SecondActivity.setIconBg(bean.getSubMenuBg());
-        SecondActivity.setCircleParams(params);
-        SecondActivity.setOnTouchListener(this);
-        View view = EUExWheel.mgr.startActivity(
-                EUExWheel.TAG_CIRCLE_CIRCLE, intent).getDecorView();
+        View view = new SecondBaseView(mContext, this, bean.getMenuIcons(index),
+                bean.getSubMenuBg(), params);
         EUExWheel.onPointTouchListener(this);
         return view;
     }
@@ -233,7 +225,7 @@ public class FirstActivity extends Activity implements OnClickListener,
         int h = mLp.height - mSize;
         int size = w < h ? w : h;
         int radius = w * 2 / 7 < h / 2 ? w * 2 / 7 : h / 2;
-        int px = ImageUtil.dip2px(this, MAXRADIUS);
+        int px = ImageUtil.dip2px(mContext, MAXRADIUS);
         if(mIsCircle){
             param.radius = size * 2 / 7 < px ? size * 2 / 7 : px;
             mSecondViewW = param.radius * 7 / 2;
@@ -285,7 +277,7 @@ public class FirstActivity extends Activity implements OnClickListener,
 
     public void startAnimationRemoveThenAdd(final int duration, int startOffSet) {
         Animation animation;
-        EUExWheel.mgr.destroyActivity(EUExWheel.TAG_CIRCLE_CIRCLE, true);
+        //EUExWheel.mgr.destroyActivity(EUExWheel.TAG_CIRCLE_CIRCLE, true);
         EUExWheel.circleCallback.removeView(secondview);
         secondview = getSecondView(mCurrentIndex);
         EUExWheel.circleCallback.addView(secondview, getSecondViewlp());
@@ -304,7 +296,7 @@ public class FirstActivity extends Activity implements OnClickListener,
 	public void removeView() {
 		mAnimation.startAnimationOUT(rl_bg, 500, 0);
 		mAnimation.startAnimationRemove((ViewGroup) secondview, 200, 0);
-		EUExWheel.mgr.destroyActivity(EUExWheel.TAG_CIRCLE_CIRCLE, true);
+		//EUExWheel.mgr.destroyActivity(EUExWheel.TAG_CIRCLE_CIRCLE, true);
 		EUExWheel.circleCallback.removeView(secondview);
 		EUExWheel.circleCallback.removeView(translucentView);
 		flag = true;
@@ -322,10 +314,6 @@ public class FirstActivity extends Activity implements OnClickListener,
 	    }
 	}
 
-    public static void setDataBean(CircleBean mCircleBean) {
-        bean = mCircleBean;
-    }
-    
     public class CircleParams{
         int pointX;
         int pointY;

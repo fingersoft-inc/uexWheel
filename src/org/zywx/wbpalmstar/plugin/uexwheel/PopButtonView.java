@@ -5,13 +5,10 @@ import org.zywx.wbpalmstar.plugin.uexwheel.EUExWheel.OnPopClickListener;
 import org.zywx.wbpalmstar.plugin.uexwheel.bean.QuartercircleBean;
 import org.zywx.wbpalmstar.plugin.uexwheel.util.ImageUtil;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,12 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PopButtonActivity extends Activity {
-	private RelativeLayout firstView;
-	private ImageView image;
+public class PopButtonView extends RelativeLayout {
 	private ImageView imagePlus;
 	private TextView buttonText;
 	private LinearLayout parent;
+    private Context mContext;
 	/**
 	 * 记录扇形是否打开
 	 */
@@ -32,29 +28,39 @@ public class PopButtonActivity extends Activity {
 	private QuartercircleBean bean;
 	private int width;
 
+    public PopButtonView(Context context) {
+        super(context);
+    }
+
+    public PopButtonView(Context context, int width) {
+        super(context);
+        this.width = width;
+        this.mContext = context;
+        init();
+    }
+
     public void setMenuShowStatus(boolean menuShowStatus) {
         this.menuShowStatus = menuShowStatus;
     }
 
-    @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	private void init() {
+        RelativeLayout firstView;
+        ImageView image;
 		int myViewID = EUExUtil.getResLayoutID("plugin_uexwheel2_first");
 		if (myViewID <= 0) {
-			Toast.makeText(this,
+			Toast.makeText(mContext,
 					"找不到名为:plugin_uexwheel2_first的layout文件!",
 					Toast.LENGTH_LONG).show();
 			return;
 		}
-		firstView = (RelativeLayout) ViewGroup.inflate(this, myViewID, null);
-		width = getIntent().getIntExtra(EUExWheel.INTENT_MENU_WIDTH, 0);
+		firstView = (RelativeLayout) ViewGroup.inflate(mContext, myViewID, null);
 		parent = (LinearLayout) firstView.findViewById(EUExUtil.getResIdID("ib_parent"));
 		int imageViewID = EUExUtil.getResIdID("ib_open");
 		int buttonId = EUExUtil.getResIdID("ib_button_txt");
 		image = (ImageView) firstView.findViewById(imageViewID);
 		buttonText = (TextView) firstView.findViewById(buttonId);
 	    imagePlus = image;
-		setContentView(firstView);
+		addView(firstView);
 	}
 
 	public void setListener(final OnPopClickListener listener) {
@@ -89,7 +95,7 @@ public class PopButtonActivity extends Activity {
         buttonText.getLayoutParams().width = width / 2;
         imagePlus.getLayoutParams().width = width / 2;
         imagePlus.getLayoutParams().height = width / 2;
-        ImageUtil.setBackgroundBitmap(this, parent, bean.getSubBg());
+        ImageUtil.setBackgroundBitmap(mContext, parent, bean.getSubBg());
         parent.getLayoutParams().width = width;
         parent.getLayoutParams().height = width;
         buttonText.setText(bean.getOpenTitle());
