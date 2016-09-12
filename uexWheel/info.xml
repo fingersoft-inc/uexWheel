@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexWheel" version="3.0.15" build="15">
-        <info>15:去掉插件中的ActivityGroup,配合引擎升级</info>
+        uexName="uexWheel" version="4.0.0" build="16">
+        <info>16:4.0插件</info>
+        <build>15:去掉插件中的ActivityGroup,配合引擎升级</build>
         <build>14:修复四分之一圆盘在页面切换之后不能正常打开的问题</build>
         <build>13:修复图标概率重叠的问题</build>
         <build>12:修改全圆轮盘回调区分点击item和圆盘中心</build>
