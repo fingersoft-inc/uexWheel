@@ -2,14 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.zywx.wbpalmstar.widgetone.uexWheel"
     android:versionCode="300"
-    android:versionName="3.0" 
+    xmlns:tools="http://schemas.android.com/tools"
+    android:versionName="3.0"
     android:installLocation="internalOnly" >
+
+    <uses-sdk android:minSdkVersion="16" />
     <application
         android:name="org.zywx.wbpalmstar.widgetone.WidgetOneApplication"
         android:allowClearUserData="false"
         android:icon="@drawable/icon"
         android:label="@string/app_name" 
         android:hardwareAccelerated="false"
+        tools:replace="android:allowBackup,android:hardwareAccelerated"
         android:allowBackup="true"
         android:vmSafeMode="true">
         <activity
@@ -19,7 +23,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/browser_main_theme"
-            android:windowSoftInputMode="stateHidden|adjustPan" >
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:replace="android:configChanges" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -57,7 +62,6 @@
         </receiver>
     </application>
 
-    <uses-sdk android:minSdkVersion="4"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
